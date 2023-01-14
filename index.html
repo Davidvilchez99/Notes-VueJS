@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="vue">
+        <h1>Proyecto VueJS - David Vilchez Almohalla</h1>
+    <input id="input" type="text" placeholder="¿Qué quieres recordar?" v-model="textoIntroducido" @keyup.enter="nuevaNota">
+    <hr>
+    <p><span id="tareas"></span> Tareas pendientes {{entradasNoCompletadas}} de <span id="de">{{muestraNumArtículos()}}</span> | <span @click="borrarTareasCompletadas" id="borrarTareas">Borar tareas completadas</span></p>
+    <input v-model="entradasFiltradas" id="filtradoNombre" placeholder="Filtrar por nombre" type="text">
+    <select id="filtradoPrioridad" v-model="selected">
+        <option disabled value="">Filtrar por prioridad</option>
+        <option value="">todos</option>
+        <option>high</option>
+        <option>normal</option>
+        <option>low</option>
+      </select>
+    <hr>
+    <div id="div--tareas">
+            <div v-for="entrada in tareasFiltradas" :key="entrada" class="note--div">
+                <div class="div--1">
+                    <div class="div--1--div">
+                        <input v-if="entrada.completed" checked class="myCheckBox active" name="interest" type="checkbox" value="car" @click="tareaCompletada(entrada)">
+                        <input v-else="entrada.completed" class="myCheckBox desactive" name="interest" type="checkbox" value="car" @click="tareaCompletada(entrada)">
+                        <h2 v-bind:class="{ completado: entrada.completed}">{{entrada.title}}</h2>
+                    </div>
+                    <div class="div--2--div">
+                        <i class="fa fa-trash" aria-hidden="true" @click="borrarTarea(entrada)"></i>
+                    </div>
+                </div>
+                <div class="div--2">
+                    <p>Prioridad: </p>
+                    <button v-if="entrada.priority==='low'" aria-pressed="true" @click="cambiarPrioridad(entrada, 'low')"  class="low prioridad">Low ↓</button>
+                    <button v-else class="low prioridad" @click="cambiarPrioridad(entrada, 'low')">Low ↓</button>
+                    <button v-if="entrada.priority==='normal'" aria-pressed="true" @click="cambiarPrioridad(entrada, 'normal')"  class="normal prioridad">Normal</button>
+                    <button v-else class="normal prioridad" @click="cambiarPrioridad(entrada, 'normal')">Normal</button>
+                    <button v-if="entrada.priority==='high'" aria-pressed="true" @click="cambiarPrioridad(entrada, 'high')"  class="high prioridad">High ↑</button>
+                    <button v-else class="high prioridad" @click="cambiarPrioridad(entrada, 'high')">High ↑</button>
+                    
+                    <p>Añadido hace {{calcularFecha(entrada.date)}} minutos</p>
+                </div>
+            </div>
+    </div>
+    </div>
+    <div id="gitHub">
+        <p>Desarrollado por David Vilchez Almohalla</p><br>
+        <p>Código disponible en  <a href="https://github.com/Davidvilchez99"><i class="fa fa-github">GitHub</i></a></p>
+    </div>
+    </div>
+</body>
+<script src="index.js"></script>
+</html>
